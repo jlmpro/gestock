@@ -1,0 +1,52 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/mygestock
+    username: postgres
+    password: pgadmin
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto:  create
+    show-sql: true
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: UTC
+        ejb :
+          interceptor: com.mystock.mygestock.interceptor.Interceptor
+
+
+    auditing:
+        enabled: true
+        dateTimeProvider: org.springframework.data.jpa.repository.support.JpaAuditingDateTimeProvider
+
+flickr:
+  apiKey: a74ab48d977815f07703b6d3f2ee97b9
+  apiSecret: 8cf703528d5c218b
+  appKey: 72157720876486896-cee34375d2b207c0
+  appSecret: 9da854192e7d214c
+
+logging:
+  level:
+    com.mystock.mygestock.validator: debug
+    com.mystock.mygestock.service.Impl: debug
+    com.mystock.mygestock.controller.ArticleController: DEBUG
+    com.mystock.mygestock.controller.ClientController: DEBUG
+    com.mystock.mygestock.controller.CommandeClientController: DEBUG
+
+application:
+  security:
+    jwt:
+      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+      expiration: 600000000 # 86400000 # a day
+      refresh-token:
+        expiration: 604800000 # 7 days
+
+server:
+  port: 8086
+
+
+
