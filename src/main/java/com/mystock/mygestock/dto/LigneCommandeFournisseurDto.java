@@ -2,7 +2,7 @@ package com.mystock.mygestock.dto;
 
 
 
-import com.mystock.mygestock.model.LigneCommandeFournisseur;
+import com.mystock.mygestock.entity.LigneCommandeFournisseur;
 import lombok.Builder;
 import lombok.Data;
 

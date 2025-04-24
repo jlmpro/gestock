@@ -1,6 +1,6 @@
 package com.mystock.mygestock.dto;
 
-import com.mystock.mygestock.model.Adresse;
+import com.mystock.mygestock.entity.Adresse;
 import lombok.Builder;
 import lombok.Data;
 

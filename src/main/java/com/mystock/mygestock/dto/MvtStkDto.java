@@ -1,9 +1,9 @@
 package com.mystock.mygestock.dto;
 
 
-import com.mystock.mygestock.model.MvtStk;
-import com.mystock.mygestock.model.SourceMvtStk;
-import com.mystock.mygestock.model.TypeMvtStk;
+import com.mystock.mygestock.entity.MvtStk;
+import com.mystock.mygestock.entity.SourceMvtStk;
+import com.mystock.mygestock.entity.TypeMvtStk;
 import lombok.Builder;
 import lombok.Data;
 

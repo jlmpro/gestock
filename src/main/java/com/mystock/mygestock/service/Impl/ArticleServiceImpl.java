@@ -7,11 +7,8 @@ import com.mystock.mygestock.dto.LigneVenteDto;
 import com.mystock.mygestock.exception.EntityNotFoundException;
 import com.mystock.mygestock.exception.ErrorCodes;
 import com.mystock.mygestock.exception.InvalidEntityException;
-import com.mystock.mygestock.model.Article;
-import com.mystock.mygestock.repository.ArticleRepository;
-import com.mystock.mygestock.repository.LigneCommandeClientRepository;
-import com.mystock.mygestock.repository.LigneCommandeFourniseurRepository;
-import com.mystock.mygestock.repository.LigneVenteRepository;
+import com.mystock.mygestock.entity.Article;
+import com.mystock.mygestock.repository.*;
 import com.mystock.mygestock.service.ArticleService;
 import com.mystock.mygestock.validator.ArticleValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +17,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -29,13 +27,15 @@ import java.util.stream.Collectors;
 public class ArticleServiceImpl implements ArticleService {
     private static final Logger LOGGER = LoggerFactory.getLogger(ArticleServiceImpl.class);
 
-    private ArticleRepository articleRepository;
-    private LigneVenteRepository ligneVenteRepository;
-    private LigneCommandeFourniseurRepository ligneCommandeFourniseurRepository;
-    private LigneCommandeClientRepository ligneCommandeClientRepository;
+    private final ArticleRepository articleRepository;
+    private final CategoryRepository categoryRepository;
+    private final LigneVenteRepository ligneVenteRepository;
+    private final LigneCommandeFourniseurRepository ligneCommandeFourniseurRepository;
+    private final LigneCommandeClientRepository ligneCommandeClientRepository;
     @Autowired
-    public ArticleServiceImpl(ArticleRepository articleRepository, LigneVenteRepository ligneVenteRepository, LigneCommandeFourniseurRepository ligneCommandeFourniseurRepository, LigneCommandeClientRepository ligneCommandeClientRepository) {
+    public ArticleServiceImpl(ArticleRepository articleRepository, CategoryRepository categoryRepository, LigneVenteRepository ligneVenteRepository, LigneCommandeFourniseurRepository ligneCommandeFourniseurRepository, LigneCommandeClientRepository ligneCommandeClientRepository) {
         this.articleRepository = articleRepository;
+        this.categoryRepository = categoryRepository;
         this.ligneVenteRepository = ligneVenteRepository;
         this.ligneCommandeFourniseurRepository = ligneCommandeFourniseurRepository;
         this.ligneCommandeClientRepository = ligneCommandeClientRepository;
@@ -43,17 +43,49 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public ArticleDto save(ArticleDto dto) {
-        log.debug("Saving article: " + dto);
+        log.debug("Saving article: {}", dto);
+
         List<String> errors = ArticleValidator.validate(dto);
-        if (!errors.isEmpty()){
-            log.error("Article is not valid {}", dto);
-            throw new InvalidEntityException("L'article n'est pas valide", ErrorCodes.ARTICLE_NOT_VALID,errors);
+        if (!errors.isEmpty()) {
+            log.error("Article is not valid: {}", errors);
+            throw new InvalidEntityException("L'article n'est pas valide", ErrorCodes.ARTICLE_NOT_VALID, errors);
         }
+
+        // 2. Vérification de l'unicité du codeArticle
+        if (articleRepository.existsByCodeArticle(dto.getCodeArticle())) {
+            throw new InvalidEntityException("Un article avec ce code existe déjà",
+                    ErrorCodes.ARTICLE_ALREADY_EXISTS, List.of("Code article déjà utilisé"));
+        }
+
+        // 3. Vérification de la catégorie
+        if (dto.getCategoryId() == null ||
+                !categoryRepository.existsById(dto.getCategoryId())) {
+            throw new InvalidEntityException("Catégorie invalide",
+                    ErrorCodes.CATEGORIE_NOT_FOUND, List.of("Catégorie introuvable ou non définie"));
+        }
+
+        if (Boolean.TRUE.equals(dto.getTvaApplicable())) {
+            if (dto.getTauxTva() == null || dto.getTauxTva().compareTo(BigDecimal.ZERO) <= 0) {
+                throw new InvalidEntityException("Taux de TVA invalide",
+                        ErrorCodes.ARTICLE_NOT_VALID, List.of("Taux TVA requis quand TVA applicable"));
+            }
+        } else {
+            dto.setTauxTva(BigDecimal.ZERO);
+        }
+
+        if (dto.getActif() == null) {
+            dto.setActif(true);
+        }else {
+            dto.setActif(dto.getActif());
+        }
+
         return ArticleDto.fromEntity(
                 articleRepository.save(
-                        ArticleDto.toEntity(dto))
+                        ArticleDto.toEntity(dto)
+                )
         );
     }
+
 
     @Override
     public List<ArticleDto> findAll() {
@@ -72,13 +104,12 @@ public class ArticleServiceImpl implements ArticleService {
         }
         Optional<Article> article = articleRepository.findById(id);
 
-        if (!article.isPresent()) {
+        if (article.isEmpty()) {
             throw new EntityNotFoundException("Aucun article avec l'ID = " + id + " n'a été trouvé dans la base", ErrorCodes.ARTICLE_NOT_FOUND);
         }
 
-        ArticleDto dto = ArticleDto.fromEntity(article.get());
 
-        return dto;
+        return ArticleDto.fromEntity(article.get());
     }
 
     @Override
@@ -89,13 +120,11 @@ public class ArticleServiceImpl implements ArticleService {
         }
         Optional<Article> article = articleRepository.findArticleByCodeArticle(codeArticle);
 
-        if (!article.isPresent()) {
+        if (article.isEmpty()) {
             throw new EntityNotFoundException("Aucun article avec le code = " + codeArticle + " n'a été trouvé dans la base", ErrorCodes.ARTICLE_NOT_FOUND);
         }
 
-        ArticleDto dto = ArticleDto.fromEntity(article.get());
-
-        return dto;
+        return ArticleDto.fromEntity(article.get());
     }
 
     @Override

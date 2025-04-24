@@ -1,7 +1,6 @@
 package com.mystock.mygestock.repository;
 
-import com.mystock.mygestock.model.LigneCommandeClient;
-import com.mystock.mygestock.model.LigneCommandeFournisseur;
+import com.mystock.mygestock.entity.LigneCommandeFournisseur;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

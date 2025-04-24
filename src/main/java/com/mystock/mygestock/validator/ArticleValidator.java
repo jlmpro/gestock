@@ -39,18 +39,8 @@ public class ArticleValidator  {
             LOGGER.error("PrixUnitaireTtc is null");
 
         }
-        if (dto.getTauxTva() == null){
-            errors.add("Veuillez renseigner le taux TVA de l'article");
-            LOGGER.error("TauxTva is null");
 
-        }
-        if (dto.getPrixUnitaireTtc() == null){
-            errors.add("Veuillez renseigner le prix unitaire TTC de l'article");
-            LOGGER.error("PrixUnitaireTtc is null");
-
-        }
-
-        if (dto.getCategory() == null) {
+        if (dto.getCategoryId() == null) {
             errors.add("Veuillez sélectionner une catégorie");
             LOGGER.error("Category is null");
         }

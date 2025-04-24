@@ -2,7 +2,7 @@ package com.mystock.mygestock.controller.api;
 
 import com.mystock.mygestock.dto.CommandeFournisseurDto;
 import com.mystock.mygestock.dto.LigneCommandeFournisseurDto;
-import com.mystock.mygestock.model.EtatCommande;
+import com.mystock.mygestock.entity.EtatCommande;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
 import org.springframework.web.bind.annotation.*;

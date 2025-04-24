@@ -2,7 +2,9 @@ package com.mystock.mygestock.dto;
 
 
 
-import com.mystock.mygestock.model.Article;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mystock.mygestock.entity.Article;
+import com.mystock.mygestock.entity.Category;
 import lombok.Builder;
 import lombok.Data;
 
@@ -15,10 +17,13 @@ public class ArticleDto {
     private String codeArticle;
     private  String designation ;
     private BigDecimal prixUnitaire ;
+    @JsonIgnore
     private BigDecimal tauxTva ;
-    private BigDecimal prixUnitaireTtc ;
     private String photo ;
-    private CategoryDto category ;
+    private Long categoryId ;
+    @JsonIgnore
+    private Boolean tvaApplicable ;
+    private Boolean actif ;
 
 
     public static ArticleDto fromEntity(Article article){
@@ -31,29 +36,37 @@ public class ArticleDto {
                 .designation(article.getDesignation())
                 .prixUnitaire(article.getPrixUnitaire())
                 .tauxTva(article.getTauxTva())
-                .prixUnitaireTtc(article.getPrixUnitaireTtc())
                 .photo(article.getPhoto())
-                .category(CategoryDto.fromEntity(article.getCategory()))
-
+                .tvaApplicable(article.getTvaApplicable())
+                .categoryId(article.getCategory() != null ? article.getCategory().getId() : null)
+                .actif(article.getActif() !=null ?article.getActif() : null)
                 .build();
     }
 
-    public static Article toEntity(ArticleDto articleDto){
-        if (articleDto == null){
+    public static Article toEntity(ArticleDto dto) {
+        if (dto == null) {
             return null;
         }
-        Article article = new Article();
-        article.setId(articleDto.getId());
-        article.setCodeArticle(articleDto.getCodeArticle());
-        article.setDesignation(articleDto.getDesignation());
-        article.setPrixUnitaire(articleDto.getPrixUnitaire());
-        article.setTauxTva(articleDto.getTauxTva());
-        article.setPrixUnitaireTtc(articleDto.getPrixUnitaireTtc());
-        article.setPhoto(articleDto.getPhoto());
-        article.setCategory(CategoryDto.toEntity(articleDto.getCategory()));
-        return article;
 
+            Article article = new Article();
+            article.setId(dto.getId());
+            article.setCodeArticle(dto.getCodeArticle());
+            article.setDesignation(dto.getDesignation());
+            article.setPrixUnitaire(dto.getPrixUnitaire());
+            article.setTauxTva(dto.getTauxTva());
+            article.setPhoto(dto.getPhoto());
+            article.setTvaApplicable(dto.getTvaApplicable());
+            article.setActif(dto.getActif());
+
+        if (dto.getCategoryId() != null) {
+            Category category = new Category();
+            category.setId(dto.getCategoryId());
+            article.setCategory(category);
+        }
+
+        return article;
     }
+
 }
 
 

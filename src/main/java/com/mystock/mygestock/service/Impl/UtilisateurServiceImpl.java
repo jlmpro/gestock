@@ -3,14 +3,12 @@ package com.mystock.mygestock.service.Impl;
 
 
 import com.mystock.mygestock.dto.ChangerPasswordUtilisateur;
-import com.mystock.mygestock.dto.RolesDto;
 import com.mystock.mygestock.dto.UtilisateurDto;
 import com.mystock.mygestock.exception.EntityNotFoundException;
 import com.mystock.mygestock.exception.ErrorCodes;
 import com.mystock.mygestock.exception.InvalidEntityException;
 import com.mystock.mygestock.exception.InvalidOperationException;
-import com.mystock.mygestock.model.Roles;
-import com.mystock.mygestock.model.Utilisateur;
+import com.mystock.mygestock.entity.Utilisateur;
 import com.mystock.mygestock.repository.UtilisateurRepository;
 import com.mystock.mygestock.service.UtilisateurService;
 import com.mystock.mygestock.validator.UtilisateurValidator;

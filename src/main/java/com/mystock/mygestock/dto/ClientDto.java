@@ -1,7 +1,7 @@
 package com.mystock.mygestock.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mystock.mygestock.model.Client;
+import com.mystock.mygestock.entity.Client;
 import lombok.Builder;
 import lombok.Data;
 

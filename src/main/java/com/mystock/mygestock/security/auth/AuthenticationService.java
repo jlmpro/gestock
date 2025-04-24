@@ -2,8 +2,9 @@ package com.mystock.mygestock.security.auth;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.mystock.mygestock.model.Roles;
-import com.mystock.mygestock.model.Utilisateur;
+import com.mystock.mygestock.exception.EmailAlreadyExistsException;
+import com.mystock.mygestock.entity.Roles;
+import com.mystock.mygestock.entity.Utilisateur;
 import com.mystock.mygestock.repository.RolesRepository;
 import com.mystock.mygestock.repository.UtilisateurRepository;
 import com.mystock.mygestock.security.config.JwtService;
@@ -54,6 +55,12 @@ public class AuthenticationService {
         // Récupérer le rôle USER
         Roles userRole = rolesRepository.findByRoleName("ROLE_USER")
                 .orElseThrow(() -> new RuntimeException("Role USER not found"));
+
+        boolean existEmail =  this.utilisateurRepository.existsByEmail(request.getEmail());
+
+        if (existEmail){
+            throw  new EmailAlreadyExistsException("Cet email est déjà utilisé !");
+        }
 
         // Créer l'utilisateur
         var utilisateur = Utilisateur.builder()

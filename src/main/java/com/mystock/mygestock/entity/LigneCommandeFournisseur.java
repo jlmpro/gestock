@@ -1,24 +1,25 @@
-package com.mystock.mygestock.model;
+package com.mystock.mygestock.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.math.BigDecimal;
 
-@Setter
 @Data
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 @Entity
-@Table(name = "lignecommandeclient")
-public class LigneCommandeClient extends AbstractEntity{
+@Table(name = "lignecommandefournisseur")
+public class LigneCommandeFournisseur extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "id_article")
     private Article article ;
-    @ManyToOne
-    @JoinColumn(name = "idcommandeclient")
-    private CommandeClient commandeClient;
     @Column(name = "quantite")
     private BigDecimal quantite ;
+    @ManyToOne
+    @JoinColumn(name = "id_commande_fournisseur")
+    private CommandeFournisseur commandeFournisseur;
+
 }

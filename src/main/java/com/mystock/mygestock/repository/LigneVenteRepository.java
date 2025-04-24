@@ -1,6 +1,6 @@
 package com.mystock.mygestock.repository;
 
-import com.mystock.mygestock.model.LigneVente;
+import com.mystock.mygestock.entity.LigneVente;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;

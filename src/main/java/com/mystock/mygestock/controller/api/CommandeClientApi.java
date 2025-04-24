@@ -2,7 +2,7 @@ package com.mystock.mygestock.controller.api;
 
 import com.mystock.mygestock.dto.CommandeClientDto;
 import com.mystock.mygestock.dto.LigneCommandeClientDto;
-import com.mystock.mygestock.model.EtatCommande;
+import com.mystock.mygestock.entity.EtatCommande;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,6 +15,10 @@ public interface CommandeClientApi {
 
     @PostMapping(value = "/save")
     ResponseEntity<CommandeClientDto> save(@RequestBody CommandeClientDto dto);
+
+    @PostMapping("/valider/{id}")
+    ResponseEntity<?> validerCommande(@PathVariable Long id);
+
 
     @PatchMapping(value = "/update/etat/{idCommande}/{etatCommande}")
     ResponseEntity<CommandeClientDto> updateEtatCommande(

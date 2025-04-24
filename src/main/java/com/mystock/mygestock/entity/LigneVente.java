@@ -1,4 +1,4 @@
-package com.mystock.mygestock.model;
+package com.mystock.mygestock.entity;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

@@ -4,7 +4,8 @@ package com.mystock.mygestock.service;
 
 import com.mystock.mygestock.dto.CommandeClientDto;
 import com.mystock.mygestock.dto.LigneCommandeClientDto;
-import com.mystock.mygestock.model.EtatCommande;
+import com.mystock.mygestock.entity.EtatCommande;
+import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -29,4 +30,6 @@ public interface CommandeClientService {
     CommandeClientDto deleteArticle(Long idCommande, Long idLigneCommande);
 
     void delete(Long id);
+
+    ResponseEntity<?> validerCommande(Long id);
 }

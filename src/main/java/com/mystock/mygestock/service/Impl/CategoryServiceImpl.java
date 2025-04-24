@@ -5,8 +5,8 @@ import com.mystock.mygestock.exception.EntityNotFoundException;
 import com.mystock.mygestock.exception.ErrorCodes;
 import com.mystock.mygestock.exception.InvalidEntityException;
 import com.mystock.mygestock.exception.InvalidOperationException;
-import com.mystock.mygestock.model.Article;
-import com.mystock.mygestock.model.Category;
+import com.mystock.mygestock.entity.Article;
+import com.mystock.mygestock.entity.Category;
 import com.mystock.mygestock.repository.ArticleRepository;
 import com.mystock.mygestock.repository.CategoryRepository;
 import com.mystock.mygestock.service.CategoryService;
@@ -21,8 +21,8 @@ import java.util.stream.Collectors;
 @Service
 @Slf4j
 public class CategoryServiceImpl implements CategoryService {
-    private CategoryRepository categoryRepository;
-    private ArticleRepository articleRepository;
+    private final CategoryRepository categoryRepository;
+    private final ArticleRepository articleRepository;
     @Autowired
     public CategoryServiceImpl(CategoryRepository categoryRepository, ArticleRepository articleRepository) {
         this.categoryRepository = categoryRepository;
@@ -35,6 +35,10 @@ public class CategoryServiceImpl implements CategoryService {
         if (!errors.isEmpty()){
             log.error("Category is not valid !{}", dto);
             throw new InvalidEntityException("Catégorie non valide !!!",ErrorCodes.CATEGORIE_NOT_VALID);
+        }
+        boolean existCategory = categoryRepository.existsByCode(dto.getCode());
+        if (existCategory){
+            throw new InvalidEntityException("Ce code catégorie est déjà utilisé !");
         }
         return CategoryDto.fromEntity(
                categoryRepository.save(

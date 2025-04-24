@@ -13,7 +13,8 @@ public class LigneCommandeClientValidator {
             errors.add("Veuiller selectionner un article");
             errors.add("Veuiller selectionner une commande");
         }
-        if (dto.getArticle() == null) {
+        assert dto != null;
+        if (dto.getIdArticle() == null) {
             errors.add("Veuiller selectionner un article");
         }
         if (dto.getCommandeClient() == null) {

@@ -3,7 +3,7 @@ package com.mystock.mygestock.controller;
 import com.mystock.mygestock.controller.api.CommandeClientApi;
 import com.mystock.mygestock.dto.CommandeClientDto;
 import com.mystock.mygestock.dto.LigneCommandeClientDto;
-import com.mystock.mygestock.model.EtatCommande;
+import com.mystock.mygestock.entity.EtatCommande;
 import com.mystock.mygestock.service.CommandeClientService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -25,6 +25,11 @@ public class CommandeClientController implements CommandeClientApi {
     @Override
     public ResponseEntity<CommandeClientDto> save(CommandeClientDto dto) {
         return ResponseEntity.ok(commandeClientService.save(dto));
+    }
+
+    @Override
+    public ResponseEntity<?> validerCommande(Long id) {
+        return commandeClientService.validerCommande(id);
     }
 
     @Override

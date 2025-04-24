@@ -1,4 +1,4 @@
-package com.mystock.mygestock.model;
+package com.mystock.mygestock.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
@@ -12,7 +12,6 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.io.Serializable;
 import java.time.Instant;
-import java.util.Date;
 
 @Setter
 @Getter

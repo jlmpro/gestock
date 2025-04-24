@@ -1,4 +1,4 @@
-package com.mystock.mygestock.model;
+package com.mystock.mygestock.entity;
 
 public enum SourceMvtStk {
     COMMANDE_CLIENT,

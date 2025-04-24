@@ -3,7 +3,7 @@ package com.mystock.mygestock.controller;
 import com.mystock.mygestock.controller.api.CommandeFournisseurApi;
 import com.mystock.mygestock.dto.CommandeFournisseurDto;
 import com.mystock.mygestock.dto.LigneCommandeFournisseurDto;
-import com.mystock.mygestock.model.EtatCommande;
+import com.mystock.mygestock.entity.EtatCommande;
 import com.mystock.mygestock.service.CommandeFournisseurService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;

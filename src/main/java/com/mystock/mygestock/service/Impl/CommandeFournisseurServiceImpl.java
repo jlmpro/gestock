@@ -6,7 +6,7 @@ import com.mystock.mygestock.exception.EntityNotFoundException;
 import com.mystock.mygestock.exception.ErrorCodes;
 import com.mystock.mygestock.exception.InvalidEntityException;
 import com.mystock.mygestock.exception.InvalidOperationException;
-import com.mystock.mygestock.model.*;
+import com.mystock.mygestock.entity.*;
 import com.mystock.mygestock.repository.ArticleRepository;
 import com.mystock.mygestock.repository.CommandeFournisseurRepository;
 import com.mystock.mygestock.repository.FournisseurRepository;

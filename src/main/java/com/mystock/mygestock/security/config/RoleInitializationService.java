@@ -1,6 +1,6 @@
 package com.mystock.mygestock.security.config;
 
-import com.mystock.mygestock.model.Roles;
+import com.mystock.mygestock.entity.Roles;
 import com.mystock.mygestock.repository.RolesRepository;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;

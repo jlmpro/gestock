@@ -1,7 +1,7 @@
 package com.mystock.mygestock.dto;
 
 
-import com.mystock.mygestock.model.Roles;
+import com.mystock.mygestock.entity.Roles;
 import lombok.Builder;
 import lombok.Data;
 

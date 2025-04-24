@@ -2,10 +2,7 @@ package com.mystock.mygestock.handles;
 
 
 
-import com.mystock.mygestock.exception.EntityNotFoundException;
-import com.mystock.mygestock.exception.ErrorCodes;
-import com.mystock.mygestock.exception.InvalidEntityException;
-import com.mystock.mygestock.exception.InvalidOperationException;
+import com.mystock.mygestock.exception.*;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -15,6 +12,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import java.util.Collections;
+import java.util.Map;
 
 @RestControllerAdvice
 public class RestExceptionHandler extends ResponseEntityExceptionHandler {
@@ -70,6 +68,15 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errorDto, notFound);
     }
+
+    @ExceptionHandler(EmailAlreadyExistsException.class)
+    public ResponseEntity<?> handleEmailAlreadyExists(EmailAlreadyExistsException ex) {
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(Map.of("error", ex.getMessage()));
+    }
+
+
+
 
 
 

@@ -1,6 +1,6 @@
 package com.mystock.mygestock.dto;
 
-import com.mystock.mygestock.model.Vente;
+import com.mystock.mygestock.entity.Vente;
 import lombok.Builder;
 import lombok.Data;
 

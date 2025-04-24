@@ -2,9 +2,9 @@ package com.mystock.mygestock.dto;
 
 
 
-import com.mystock.mygestock.model.CommandeClient;
-import com.mystock.mygestock.model.EtatCommande;
-import com.mystock.mygestock.model.LigneCommandeClient;
+import com.mystock.mygestock.entity.CommandeClient;
+import com.mystock.mygestock.entity.EtatCommande;
+import com.mystock.mygestock.entity.LigneCommandeClient;
 import lombok.Builder;
 import lombok.Data;
 
@@ -34,25 +34,40 @@ public class CommandeClientDto {
                 .dateCommande(commandeClient.getDateCommande())
                 .etatCommande(commandeClient.getEtatCommande())
                 .client(ClientDto.fromEntity(commandeClient.getClient()))
+                .ligneCommandeClients(
+                        commandeClient.getLigneCommandeClients() != null
+                                ? commandeClient.getLigneCommandeClients().stream()
+                                .map(LigneCommandeClientDto::fromEntity)
+                                .collect(Collectors.toList())
+                                : null
+                )
+
                 .build();
     }
 
-    public static CommandeClient toEntity(CommandeClientDto commandeClientDto){
-        CommandeClient commandeClient = new CommandeClient();
-        commandeClient.setId(commandeClientDto.getId());
-        commandeClient.setCode(commandeClientDto.getCode());
-        commandeClient.setDateCommande(commandeClientDto.getDateCommande());
-        commandeClient.setEtatCommande(EtatCommande.valueOf(commandeClientDto.getEtatCommande().name()));
-        commandeClient.setClient(ClientDto.toEntity(commandeClientDto.getClient())); // appel de la méthode toEntity de ClientDto
+    public static CommandeClient toEntity(CommandeClientDto dto) {
+        if (dto == null) {
+            return null;
+        }
 
-        List<LigneCommandeClient> ligneCommandeClients = commandeClientDto.getLigneCommandeClients().stream()
-                .map(LigneCommandeClientDto::toEntity) // appel de la méthode toEntity de LigneCommandeClientDto
-                .collect(Collectors.toList());
+        CommandeClient entity = new CommandeClient();
+        entity.setId(dto.getId());
+        entity.setCode(dto.getCode());
+        entity.setDateCommande(dto.getDateCommande());
+        entity.setEtatCommande(dto.getEtatCommande());
+        entity.setClient(ClientDto.toEntity(dto.getClient()));
 
-        commandeClient.setLigneCommandeClients(ligneCommandeClients);
+        if (dto.getLigneCommandeClients() != null) {
+            List<LigneCommandeClient> lignes = dto.getLigneCommandeClients().stream()
+                    .map(LigneCommandeClientDto::toEntity)
+                    .peek(ligne -> ligne.setCommandeClient(entity)) // éviter la boucle infinie
+                    .collect(Collectors.toList());
+            entity.setLigneCommandeClients(lignes);
+        }
 
-        return commandeClient;
+        return entity;
     }
+
 
 
 

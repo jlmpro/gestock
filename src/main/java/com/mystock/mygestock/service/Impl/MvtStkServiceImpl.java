@@ -3,7 +3,7 @@ package com.mystock.mygestock.service.Impl;
 import com.mystock.mygestock.dto.MvtStkDto;
 import com.mystock.mygestock.exception.ErrorCodes;
 import com.mystock.mygestock.exception.InvalidEntityException;
-import com.mystock.mygestock.model.TypeMvtStk;
+import com.mystock.mygestock.entity.TypeMvtStk;
 import com.mystock.mygestock.repository.MvtStkRepository;
 import com.mystock.mygestock.service.ArticleService;
 import com.mystock.mygestock.service.MvtStkService;

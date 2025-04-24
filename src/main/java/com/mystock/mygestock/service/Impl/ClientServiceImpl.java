@@ -1,14 +1,13 @@
 package com.mystock.mygestock.service.Impl;
 
 
-import com.mystock.mygestock.controller.ClientController;
 import com.mystock.mygestock.dto.ClientDto;
 import com.mystock.mygestock.exception.EntityNotFoundException;
 import com.mystock.mygestock.exception.ErrorCodes;
 import com.mystock.mygestock.exception.InvalidEntityException;
 import com.mystock.mygestock.exception.InvalidOperationException;
-import com.mystock.mygestock.model.Client;
-import com.mystock.mygestock.model.CommandeClient;
+import com.mystock.mygestock.entity.Client;
+import com.mystock.mygestock.entity.CommandeClient;
 import com.mystock.mygestock.repository.ClientRepository;
 import com.mystock.mygestock.repository.CommandeClientRepository;
 import com.mystock.mygestock.service.ClientService;

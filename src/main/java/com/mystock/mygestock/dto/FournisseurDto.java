@@ -2,13 +2,10 @@ package com.mystock.mygestock.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.mystock.mygestock.model.CommandeFournisseur;
-import com.mystock.mygestock.model.Fournisseur;
+import com.mystock.mygestock.entity.Fournisseur;
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Builder

@@ -1,9 +1,8 @@
 package com.mystock.mygestock.service;
 
 import com.mystock.mygestock.dto.CommandeFournisseurDto;
-import com.mystock.mygestock.dto.LigneCommandeClientDto;
 import com.mystock.mygestock.dto.LigneCommandeFournisseurDto;
-import com.mystock.mygestock.model.EtatCommande;
+import com.mystock.mygestock.entity.EtatCommande;
 
 import java.math.BigDecimal;
 import java.util.List;

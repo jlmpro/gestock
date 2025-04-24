@@ -1,10 +1,7 @@
-package com.mystock.mygestock.model;
+package com.mystock.mygestock.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.proxy.HibernateProxy;
-
-import java.util.Objects;
 
 @Getter
 @Setter
